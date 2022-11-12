@@ -4,7 +4,9 @@ Template for creating new CLI with connections to DB and loguru
 
 ##
 
-https://www.digitalocean.com/community/tutorials/how-to-use-flask-sqlalchemy-to-interact-with-databases-in-a-flask-application
+https://www.digitalocean.com/community/tutorials/
+
+how-to-use-flask-sqlalchemy-to-interact-with-databases-in-a-flask-application
 
 https://docs.sqlalchemy.org/en/20/orm/quickstart.html
 
