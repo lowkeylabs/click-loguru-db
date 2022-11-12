@@ -2,10 +2,7 @@ import click
 import sys
 from loguru import logger
 
-default_log_level = "SUCCESS"  # DEBUG,TRACE,INFO,SUCCESS,WARNING,FATAL
-
-#logger.remove()
-#logger.add(sys.stderr, level="INFO") # or sys.stdout or other file object
+default_log_level = "SUCCESS"  # TRACE,DEBUG,INFO,SUCCESS,WARNING,ERROR,CRITICAL
 
 if __name__ == '__main__':
     from build import build
