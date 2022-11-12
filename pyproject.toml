@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "click-loguru-db"
+version = "0.1.0"
+description = "template using click loguru and a DB"
+authors = ["John Leonard <john@lowkeylabs.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include="src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+loguru = "^0.6.0"
+click = "^8.1.3"
+SQLAlchemy = "^1.4.43"
+Flask = "^2.2.2"
+flask-sqlalchemy = "^3.0.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+hello = "src.cli1:hello"
+
