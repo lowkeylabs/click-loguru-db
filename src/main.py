@@ -2,7 +2,7 @@ import click
 import sys
 from loguru import logger
 
-default_log_level = "SUCCESS"
+default_log_level = "SUCCESS"  # DEBUG,TRACE,INFO,SUCCESS,WARNING,FATAL
 
 #logger.remove()
 #logger.add(sys.stderr, level="INFO") # or sys.stdout or other file object
@@ -22,11 +22,14 @@ else:
 
 
 @click.group(help="DBC - send commands to database",invoke_without_command=True)
-@click.option('--log-level', default=default_log_level, help='Set log level (DEBUG,TRACE,INFO,SUCCESS,WARNING,FATAL)')
+@click.option('--log-level',
+    default=default_log_level,
+    type=click.Choice(['TRACE','DEBUG','INFO','SUCCESS','WARNING','ERROR','CRITICAL'],case_sensitive=False)
+)
 @click.pass_context
 def cli(ctx,log_level):
     logger.remove()
-    logger.add(sys.stderr, level=log_level) # or sys.stdout or other file object
+    logger.add(sys.stderr, level=log_level.upper()) # or sys.stdout or other file object
     logger.info(f"Setting log-level to {log_level}")
 
     if ctx.invoked_subcommand is None:
