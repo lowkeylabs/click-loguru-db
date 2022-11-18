@@ -7,7 +7,7 @@ if __name__ == '__main__':
     from build import build
     from deploy import deploy
     from check import check
-    import utils_init
+    from utils_init import *
 else:
     from .build import build
     from .deploy import deploy

@@ -1,7 +1,11 @@
 import click
 import sys, os
 from loguru import logger
-from .utils_init import *
+
+if __name__ == 'src.check':
+    from .utils_init import *
+else:
+    from utils_init import *
 
 @click.command()
 @click.option('--quick', is_flag=True, help='Perform checking function without module')

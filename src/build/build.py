@@ -1,6 +1,11 @@
 import click
 from loguru import logger
-from ..utils_init import *
+
+
+if __name__ == 'src.build.build':
+    from ..utils_init import *
+else:
+    from utils_init import *
 
 @click.command()
 @click.option('--docker', is_flag=True, help='Indicates the project should be built into docker image')

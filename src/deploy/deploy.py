@@ -1,6 +1,11 @@
 import click
 from loguru import logger
-from ..utils_init import *
+
+
+if __name__ == 'src.deploy.deploy':
+    from ..utils_init import *
+else:
+    from utils_init import *
 
 @click.command()
 @click.option('--env', '-e', default="dev", type=click.Choice(['dev', 'stg', 'prd'], case_sensitive=False), prompt='Enter env name to deploy', help='Env to deploy')
