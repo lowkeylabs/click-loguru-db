@@ -1,8 +1,10 @@
 import click
 from loguru import logger
+from ..utils_init import *
 
 @click.command()
 @click.option('--docker', is_flag=True, help='Indicates the project should be built into docker image')
+@click_config_file.configuration_option(implicit=True,provider=myprovider)
 def build(docker):
     """ Command build docstring"""
     logger.info("Entering command build")

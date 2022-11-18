@@ -17,6 +17,7 @@ SQLAlchemy = "^1.4.43"
 Flask = "^2.2.2"
 flask-sqlalchemy = "^3.0.2"
 pytest = "^7.2.0"
+click-config-file = "^0.6.0"
 
 
 [build-system]
