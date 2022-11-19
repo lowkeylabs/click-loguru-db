@@ -10,7 +10,8 @@ else:
 @click.command()
 @click.option('--quick', is_flag=True, help='Perform checking function without module')
 @click.option('--test',  default="test string in click.option", help='reading a string')
-@click_config_file.configuration_option(implicit=True,provider=myprovider)
+#@click_config_file.configuration_option(implicit=True,provider=myprovider)
+@click_config_file.configuration_option()
 def check(quick,test):
     """ Command check docstring """
     logger.info("Entering command check")

@@ -9,7 +9,7 @@ else:
 
 @click.command()
 @click.option('--docker', is_flag=True, help='Indicates the project should be built into docker image')
-@click_config_file.configuration_option(implicit=True,provider=myprovider)
+@click_config_file.configuration_option()
 def build(docker):
     """ Command build docstring"""
     logger.info("Entering command build")

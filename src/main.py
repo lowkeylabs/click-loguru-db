@@ -25,7 +25,7 @@ else:
     type=click.Choice(['TRACE','DEBUG','INFO','SUCCESS','WARNING','ERROR','CRITICAL'],
     case_sensitive=False)
 )
-@click_config_file.configuration_option(implicit=True,provider=myprovider)
+@click_config_file.configuration_option()
 @click.pass_context
 def cli(ctx,log_level):
     logger.remove()

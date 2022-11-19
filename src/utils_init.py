@@ -11,6 +11,11 @@ default_log_level = "SUCCESS"  # TRACE,DEBUG,INFO,SUCCESS,WARNING,ERROR,CRITICAL
 CONFIG_FILE1 = "".join(["~/.config/",os.path.basename( sys.argv[0] ),".toml"])
 CONFIG_FILE2 = os.path.join(os.getcwd(),"".join([os.path.basename( sys.argv[0] ),".toml"]))
 
+from functools import partial
+import click
+click.option = partial(click.option, show_default=True)
+
+
 def myprovider2(file_path, cmd_name):
     config = configparser.ConfigParser(strict=False)
     config.read(CONFIG_FILE1)
@@ -36,3 +41,5 @@ def myprovider(file_path, cmd_name):
     else:
         config.add(cmd_name,table())
     return config[cmd_name]
+
+click_config_file.configuration_option= partial(click_config_file.configuration_option,implicit=True,provider=myprovider)
