@@ -42,4 +42,4 @@ def myprovider(file_path, cmd_name):
         config.add(cmd_name,table())
     return config[cmd_name]
 
-click_config_file.configuration_option= partial(click_config_file.configuration_option,implicit=True,provider=myprovider)
+click_config_file.configuration_option= partial(click_config_file.configuration_option,implicit=True,provider=myprovider,config_file_name=CONFIG_FILE2)
