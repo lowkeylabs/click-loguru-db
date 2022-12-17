@@ -21,7 +21,7 @@ def check(quick,test):
         print(f'Long form checking ...')
 
     click.echo(f"parameter test: {test}" )
-    click.echo(f"paramter quick: {quick}" )
+    click.echo(f"parameter quick: {quick}" )
     click.echo(f"current folder:{os.getcwd()}")
 
 if __name__ == '__main__':
