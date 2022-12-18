@@ -4,7 +4,7 @@
 .PHONY: help
 help:
 	echo Default makefile commands
-	cat Makefile | grep -i ".title=" | tail -n +2 | sed -e "s/.title=/ -\> /g" | sed -e "s/^/\t/"
+	cat Makefile | grep -i ".title=" | tail -n +2 | sed -e "s/.title=/ -\> /g" -e "s/^/\t/"
 
 .PHONY: cmd1
 cmd1.title=does X
