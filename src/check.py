@@ -1,11 +1,14 @@
+""" module check.py
+"""
+import os
 import click
-import sys, os
 from loguru import logger
 
-if __name__ == 'src.check':
-    from .utils_init import *
-else:
-    from utils_init import *
+#if __name__ == 'src.check':
+#    from .utils_init import click_config_file
+#else:
+
+from src.utils_init import click_config_file
 
 @click.command()
 @click.option('--quick', is_flag=True, help='Perform checking function without module')
@@ -16,14 +19,13 @@ def check(quick,test):
     """ Command check docstring """
     logger.info("Entering command check")
     if quick:
-        print(f'Quick form checking ...')
+        print('Quick form checking ...')
     else:
-        print(f'Long form checking ...')
+        print('Long form checking ...')
 
     click.echo(f"parameter test: {test}" )
     click.echo(f"parameter quick: {quick}" )
     click.echo(f"current folder:{os.getcwd()}")
 
 if __name__ == '__main__':
-    check()
-
+    check() # pylint: disable=no-value-for-parameter

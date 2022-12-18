@@ -1,18 +1,17 @@
-import click
+""" main.py docstring
+"""
+
 import sys
+import click
 from loguru import logger
 
+from src.utils_init import click_config_file,DEFAULT_LOG_LEVEL
+from src.build import build
+from src.deploy import deploy
+from src.check import check
 
-if __name__ == '__main__':
-    from build import build
-    from deploy import deploy
-    from check import check
-    from utils_init import *
-else:
-    from .build import build
-    from .deploy import deploy
-    from .check import check
-    from .utils_init import *
+logger.remove()
+logger.add(sys.stderr, level=DEFAULT_LOG_LEVEL)
 
 
 # might be handy to open/close the DB before/after the group
@@ -21,24 +20,28 @@ else:
 
 @click.group(help="DBC - send commands to database",invoke_without_command=True)
 @click.option('--log-level',
-    default=default_log_level,
+    default=DEFAULT_LOG_LEVEL,
+#    default="TRACE",
     type=click.Choice(['TRACE','DEBUG','INFO','SUCCESS','WARNING','ERROR','CRITICAL'],
     case_sensitive=False)
 )
 @click_config_file.configuration_option()
 @click.pass_context
 def cli(ctx,log_level):
+    """ main cli """
     logger.remove()
     logger.add(sys.stderr, level=log_level)
 
+    if log_level != DEFAULT_LOG_LEVEL:
+        logger.info(f"Log level changed to: {log_level}" )
+    else:
+        logger.debug(f"Default log level: {DEFAULT_LOG_LEVEL}")
+
     if ctx.invoked_subcommand is None:
-        logger.info(f"No command provided. Invoking help.")
+        logger.info("No command provided. Invoking help.")
         click.echo( ctx.get_help() )
     else:
-        logger.info(f"Invoking (from main) {ctx.invoked_subcommand}")
-        pass
-    click.echo(f"parameter log_level: {log_level}" )
-    pass
+        logger.debug(f"Invoking (from main) {ctx.invoked_subcommand}")
 
 
 cli.add_command(build.build)
@@ -46,4 +49,4 @@ cli.add_command(deploy.deploy)
 cli.add_command(check)
 
 if __name__ == '__main__':
-    cli()
+    cli() # pylint: disable=no-value-for-parameter

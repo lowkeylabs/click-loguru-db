@@ -1,3 +1,6 @@
+[pycli]
+log_level="SUCCESS"
 [check]
 test="this is an override in pycli.toml"
-
+[pycli.testdict]
+this="is a test dictionary"
