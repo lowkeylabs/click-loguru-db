@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "click-loguru-db"
+name = "pycli-click-loguru-db"
 version = "0.1.0"
-description = "template using click loguru and a DB"
+description = "CLI template using click loguru and a DB"
 authors = ["John Leonard <john@lowkeylabs.com>"]
 license = "MIT"
 readme = "README.md"
@@ -26,4 +26,4 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-dbc = "src:main.cli"
+pycli = "src:main.cli"
