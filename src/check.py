@@ -3,12 +3,9 @@
 import os
 import click
 from loguru import logger
-
-#if __name__ == 'src.check':
-#    from .utils_init import click_config_file
-#else:
-
 from src.utils_init import click_config_file
+
+logger.trace(f"After imports {__file__}")
 
 @click.command()
 @click.option('--quick', is_flag=True, help='Perform checking function without module')

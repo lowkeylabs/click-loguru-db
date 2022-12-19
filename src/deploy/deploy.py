@@ -2,12 +2,9 @@
 '''
 import click
 from loguru import logger
-
-#if __name__ == 'src.deploy.deploy':
-#    from ..utils_init import click_config_file
-#else:
-
 from src.utils_init import click_config_file
+
+logger.trace(f"After imports {__file__}")
 
 @click.command()
 @click.option('--env', '-e', default="dev",

@@ -10,6 +10,8 @@ import click_config_file
 from loguru import logger
 from tomlkit import table,loads,document
 
+logger.trace(f"After imports {__file__}")
+
 DEFAULT_LOG_LEVEL = "SUCCESS"  # TRACE,DEBUG,INFO,SUCCESS,WARNING,ERROR,CRITICAL
 
 

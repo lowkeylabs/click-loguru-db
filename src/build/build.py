@@ -2,8 +2,9 @@
 '''
 import click
 from loguru import logger
-
 from src.utils_init import click_config_file
+
+logger.trace(f"After imports {__file__}")
 
 @click.command()
 @click.option('--docker', is_flag=True,

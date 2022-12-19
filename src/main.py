@@ -10,9 +10,7 @@ from src.build import build
 from src.deploy import deploy
 from src.check import check
 
-logger.remove()
-logger.add(sys.stderr, level=DEFAULT_LOG_LEVEL)
-
+logger.trace(f"After imports {__file__}")
 
 # might be handy to open/close the DB before/after the group
 #  https://click.palletsprojects.com/en/8.1.x/advanced/#managing-resources
@@ -29,13 +27,6 @@ logger.add(sys.stderr, level=DEFAULT_LOG_LEVEL)
 @click.pass_context
 def cli(ctx,log_level):
     """ main cli """
-    logger.remove()
-    logger.add(sys.stderr, level=log_level)
-
-    if log_level != DEFAULT_LOG_LEVEL:
-        logger.info(f"Log level changed to: {log_level}" )
-    else:
-        logger.debug(f"Default log level: {DEFAULT_LOG_LEVEL}")
 
     if ctx.invoked_subcommand is None:
         logger.info("No command provided. Invoking help.")
