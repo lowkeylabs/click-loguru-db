@@ -2,7 +2,7 @@
 '''
 import click
 from loguru import logger
-from src.utils_init import click_config_file
+from src import click_config_file
 
 logger.trace(f"After imports {__file__}")
 
