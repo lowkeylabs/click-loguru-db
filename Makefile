@@ -21,7 +21,7 @@ lint:
 .PHONY: coverage
 coverage.title=run coverage
 coverage:
-	poetry run coverage report -m
+	poetry run coverage run -m pytest && poetry run coverage report -m
 
 .PHONY: all
 all.title=run test lint coverage

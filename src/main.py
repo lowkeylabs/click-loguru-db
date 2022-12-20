@@ -1,7 +1,6 @@
 """ main.py docstring
 """
 
-import sys
 import click
 from loguru import logger
 
@@ -28,9 +27,8 @@ logger.trace(f"After imports {__file__}")
 )
 @click_config_file.configuration_option()
 @click.pass_context
-def cli(ctx,log_level):
+def cli(ctx,log_level): # pylint: disable=unused-argument
     """ main cli """
-
     if ctx.invoked_subcommand is None:
         logger.info("No command provided. Invoking help.")
         click.echo( ctx.get_help() )

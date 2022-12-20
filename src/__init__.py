@@ -3,12 +3,13 @@ Search for config file and assign it.
 """
 import os
 import sys
-import xdg
 import argparse
+from functools import partial
+
+import xdg
 from loguru import logger
 from tomlkit import table,loads,document,dumps
 
-from functools import partial
 import click
 import click_config_file
 
@@ -26,11 +27,14 @@ parser = argparse.ArgumentParser(exit_on_error=False,add_help=False)
 parser.add_argument('--log-level', default=DEFAULT_LOG_LEVEL, type=str)
 parser.add_argument('--config', default=None, type=str)
 
-args, unknown = parser.parse_known_args()
+args, unknown = parser.parse_known_args() # pylint: disable=multiple-statements
 
-log_level = DEFAULT_LOG_LEVEL
-if args.log_level is not None: log_level = args.log_level
-if os.environ.get(ENV_LOG_LEVEL) is not None: log_level = os.environ.get(ENV_LOG_LEVEL)
+log_level = DEFAULT_LOG_LEVEL # pylint: disable=invalid-name
+
+if args.log_level is not None:
+    log_level = args.log_level
+if os.environ.get(ENV_LOG_LEVEL) is not None:
+    log_level = os.environ.get(ENV_LOG_LEVEL)
 logger.remove()
 logger.add(sys.stderr, level=log_level)
 logger.info(f"Using log level: {args.log_level}")
@@ -47,8 +51,8 @@ logger.trace(f"Inside {__file__}")
 
 def log_dirs():
     """ log directories """
-    global config
-    global args
+    global config # pylint: disable=global-statement,global-variable-not-assigned,invalid-name
+    global args # pylint: disable=global-statement,global-variable-not-assigned,invalid-name
     files = {}
     files["command_line"] = args.config
     files["ENV:"+ENV_CONFIG] = os.environ.get(ENV_CONFIG)
@@ -83,10 +87,10 @@ def log_dirs():
 #    files["ENV_HOME"] = ENV_HOME
 #    files["ENV:"+ENV_HOME] = os.environ.get(ENV_HOME)
 
-    for f,g in files.items():
+    for f,g in files.items(): # pylint: disable=invalid-name
         logger.trace(f"{f}: {g}")
 
-    for f,g in files.items():
+    for f,g in files.items(): # pylint: disable=invalid-name
         if g is not None:
             try:
                 with open(g,'r',encoding='utf-8') as file:
