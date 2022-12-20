@@ -22,22 +22,19 @@ ENV_LOG_LEVEL = program_name+"_LOG_LEVEL"
 # Do quick check of command line for log level prior to doing anything else!
 
 logger.trace(f"sys.argv[1:]:{sys.argv[1:]}")
-parser = argparse.ArgumentParser(exit_on_error=True)
+parser = argparse.ArgumentParser(exit_on_error=False,add_help=False)
 parser.add_argument('--log-level', default=DEFAULT_LOG_LEVEL, type=str)
 parser.add_argument('--config', default=None, type=str)
-try:
-#    args = parser.parse_args()
-    args, unknown = parser.parse_known_args()
 
-    log_level = DEFAULT_LOG_LEVEL
-    if args.log_level is not None: log_level = args.log_level
-    if os.environ.get(ENV_LOG_LEVEL) is not None: log_level = os.environ.get(ENV_LOG_LEVEL)
-    logger.remove()
-    logger.add(sys.stderr, level=log_level)
-    logger.info(f"Using log level: {args.log_level}")
-    logger.trace(f"Config file set on command line: {args.config}")
-except:
-    pass
+args, unknown = parser.parse_known_args()
+
+log_level = DEFAULT_LOG_LEVEL
+if args.log_level is not None: log_level = args.log_level
+if os.environ.get(ENV_LOG_LEVEL) is not None: log_level = os.environ.get(ENV_LOG_LEVEL)
+logger.remove()
+logger.add(sys.stderr, level=log_level)
+logger.info(f"Using log level: {args.log_level}")
+logger.trace(f"Config file set on command line: {args.config}")
 
 
 config = document()
@@ -51,6 +48,7 @@ logger.trace(f"Inside {__file__}")
 def log_dirs():
     """ log directories """
     global config
+    global args
     files = {}
     files["command_line"] = args.config
     files["ENV:"+ENV_CONFIG] = os.environ.get(ENV_CONFIG)
@@ -114,7 +112,7 @@ def myprovider(file_path, cmd_name):
     return config[cmd_name]
 
 click_config_file.configuration_option = partial(click_config_file.configuration_option,
-    implicit=True,provider=myprovider)
+    implicit=False,provider=myprovider, hidden=True)
 
 
 # userhome: %USERPROFILE%
