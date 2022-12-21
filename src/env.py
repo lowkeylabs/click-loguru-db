@@ -16,17 +16,11 @@ logger.trace(f"After imports {__file__}")
 @click_config_file.configuration_option()
 def cli(quick,test):
     """ Command verify docstring """
-    logger.info("Entering verify")
-    if quick:
-        print('Quick form verify ...')
-    else:
-        print('Long form verify ...')
+    logger.debug(f"Entering {os.path.basename(__file__)[:-3]}")
 
-    click.echo(f"parameter test: {test}" )
-    click.echo(f"parameter quick: {quick}" )
-    click.echo(f"current folder:{os.getcwd()}")
-
-    click.echo(dumps(config))
+    for (key,value) in os.environ.items():
+        if key!="PATH":
+            click.echo(f"{key}:{value}")
 
 if __name__ == '__main__':
     cli() # pylint: disable=no-value-for-parameter

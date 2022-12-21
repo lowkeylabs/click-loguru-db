@@ -35,12 +35,15 @@ class MyCLI(click.MultiCommand):
         filename = os.path.join(source_folder, cmd_name + '.py')
         namespace = {}
         namespace["__file__"] = filename
-        logger.trace(f"running: {filename}")
-        with open(filename,'r',encoding='utf-8') as fhandle:
-            code = compile(fhandle.read(), filename, 'exec')
-            eval(code, namespace, namespace) # pylint: disable=eval-used
-        return namespace['cli']
-
+        try:
+            with open(filename,'r',encoding='utf-8') as fhandle:
+                logger.trace(f"running: {filename}")
+                code = compile(fhandle.read(), filename, 'exec')
+                eval(code, namespace, namespace) # pylint: disable=eval-used
+            return namespace['cli']
+        except IOError:
+            logger.debug(f"Missing command: {cmd_name}")
+        return None
 
 @click.command(cls=MyCLI,help="tools subcommands loaded",invoke_without_command=True)
 #@click.group(help=program_name+" - send commands to database",invoke_without_command=True)
