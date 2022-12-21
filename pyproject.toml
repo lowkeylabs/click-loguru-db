@@ -33,7 +33,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-pycli = "src:main.cli"
+pycli = "src:_main.cli"
 
 [tool.coverage.run]
 omit = [".*", "*/site-packages/*"]

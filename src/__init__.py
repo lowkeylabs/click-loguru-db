@@ -87,15 +87,15 @@ def log_dirs():
 #    files["ENV_HOME"] = ENV_HOME
 #    files["ENV:"+ENV_HOME] = os.environ.get(ENV_HOME)
 
-    for f,g in files.items(): # pylint: disable=invalid-name
-        logger.trace(f"{f}: {g}")
+    for (key,value) in files.items():
+        logger.trace(f"{key}: {value}")
 
-    for f,g in files.items(): # pylint: disable=invalid-name
-        if g is not None:
+    for (key,value) in files.items():
+        if value is not None:
             try:
-                with open(g,'r',encoding='utf-8') as file:
+                with open(value,'r',encoding='utf-8') as file:
                     config = loads(file.read())
-                    logger.info(f"Using config file: {g}")
+                    logger.info(f"Using config file: {value}")
                     break
             except IOError:
                 pass

@@ -1,9 +1,11 @@
-""" module check.py
+""" module verify.py
 """
 import os
 import click
 from loguru import logger
+from tomlkit import dumps
 from src import click_config_file
+from src import config
 
 logger.trace(f"After imports {__file__}")
 
@@ -13,16 +15,18 @@ logger.trace(f"After imports {__file__}")
 #@click_config_file.configuration_option(implicit=True,provider=myprovider)
 @click_config_file.configuration_option()
 def cli(quick,test):
-    """ Command check docstring """
-    logger.info("Entering command check")
+    """ Command verify docstring """
+    logger.info("Entering verify")
     if quick:
-        print('Quick form checking ...')
+        print('Quick form verify ...')
     else:
-        print('Long form checking ...')
+        print('Long form verify ...')
 
     click.echo(f"parameter test: {test}" )
     click.echo(f"parameter quick: {quick}" )
     click.echo(f"current folder:{os.getcwd()}")
+
+    click.echo(dumps(config))
 
 if __name__ == '__main__':
     cli() # pylint: disable=no-value-for-parameter

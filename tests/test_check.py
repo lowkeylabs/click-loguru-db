@@ -1,9 +1,9 @@
 from click.testing import CliRunner
-from src import main
+from src import _main
 
 def test_check_empty_call():
     runner = CliRunner()
-    result = runner.invoke(main.cli)
+    result = runner.invoke(_main.cli)
     assert result.exit_code == 0
     assert "Usage" in result.output
     assert "  build" in result.output
@@ -12,6 +12,6 @@ def test_check_empty_call():
 
 def test_check_deploy_help():
     runner = CliRunner()
-    result = runner.invoke(main.cli,["deploy","--help"])
+    result = runner.invoke(_main.cli,["deploy","--help"])
     assert result.exit_code == 0
     assert "Usage" in result.output

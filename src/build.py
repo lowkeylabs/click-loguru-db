@@ -10,7 +10,7 @@ logger.trace(f"After imports {__file__}")
 @click.option('--docker', is_flag=True,
     help='Indicates the project should be built into docker image')
 @click_config_file.configuration_option()
-def build(docker):
+def cli(docker):
     """ Command build docstring"""
     logger.info("Entering command build")
     if docker:
@@ -19,4 +19,4 @@ def build(docker):
         print('Building this repo using default method...')
 
 if __name__ == '__main__':
-    build() # pylint: disable=no-value-for-parameter
+    cli() # pylint: disable=no-value-for-parameter
