@@ -11,3 +11,7 @@ test="this is an override in pycli.toml"
 [pycli2.testdict]
 this="is a test dictionary"
 second="ho ho"
+
+[slides]
+screen_id=1
+image_folder="C:\\"

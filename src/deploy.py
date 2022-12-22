@@ -2,7 +2,7 @@
 '''
 import click
 from loguru import logger
-from src import click_config_file
+from src import click_config_file,myprovider
 
 logger.trace(f"After imports {__file__}")
 
@@ -12,7 +12,8 @@ logger.trace(f"After imports {__file__}")
     prompt='Enter env name to deploy', help='Env to deploy')
 @click.option('--cloud', '-c', default="aws", type=click.Choice(['aws', 'gcp', 'azure'],
     case_sensitive=False), prompt='Enter cloud to deploy to', help='Cloud to deploy to')
-@click_config_file.configuration_option()
+@click_config_file.configuration_option(implicit=True,provider=myprovider)
+#@click_config_file.configuration_option()
 def cli(env, cloud):
     """ Command deploy docstring """
     logger.info("Entering command deploy")

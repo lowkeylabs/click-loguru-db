@@ -21,6 +21,12 @@ tomlkit = "^0.11.6"
 pylint = "^2.15.9"
 xdg = "^5.1.1"
 argparse = "^1.4.0"
+attrdict = "^2.0.1"
+numpy = "^1.24.0"
+screeninfo = "^0.8.1"
+opencv-python = "^4.6.0.66"
+imutils = "^0.5.4"
+pathlib = "^1.0.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.0"

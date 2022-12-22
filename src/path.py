@@ -3,19 +3,15 @@
 import os
 import click
 from loguru import logger
-from tomlkit import dumps
-from src import click_config_file
-from src import config
+from src import click_config_file, myprovider
 
 logger.trace(f"After imports {__file__}")
 
 @click.command()
-@click.option('--quick', is_flag=True, help='Perform checking function without module')
-@click.option('--test',  default="test string in click.option", help='reading a string')
-#@click_config_file.configuration_option(implicit=True,provider=myprovider)
-@click_config_file.configuration_option()
-def cli(quick,test):
-    """ Command verify docstring """
+#@click_config_file.configuration_option()
+@click_config_file.configuration_option(implicit=True,provider=myprovider)
+def cli():
+    """ Show PATH from environment """
     logger.debug(f"Entering {os.path.basename(__file__)[:-3]}")
 
     path = os.getenv("PATH")
