@@ -23,10 +23,11 @@ def display_pics( screen_id,image_folder ):
     is_color = True
 
     # get the size of the screen
+    logger.debug(f"Screen id: {screen_id}")
     screen = screeninfo.get_monitors()[screen_id]
     (width, height) = (screen.width, screen.height)
 
-    if not os.path.exists( "C:\\Users\\john\\.my-setup\\Background1.jpg" ):
+    if not os.path.exists( "C:\\Users\\john\\.mysetup\\Background1.jpg" ):
         print("die")
 
     #image = cv2.imread("C:\\Users\\john\\.my-setup\\Background1.jpg",cv2.IMREAD_COLOR)
@@ -60,7 +61,7 @@ def display_pics( screen_id,image_folder ):
 
 @click.command()
 @click.option('--image-folder', help='folder with images to display')
-@click.option('--screen-id', default=1, help='For multimonitor systems, use this screen ID')
+@click.option('--screen-id', default=0, help='For multimonitor systems, use this screen ID')
 #@click_config_file.configuration_option()
 @click_config_file.configuration_option(implicit=True,provider=myprovider)
 def cli(image_folder,screen_id):

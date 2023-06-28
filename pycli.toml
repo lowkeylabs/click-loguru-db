@@ -13,5 +13,5 @@ this="is a test dictionary"
 second="ho ho"
 
 [slides]
-screen_id=1
+screen_id=0
 image_folder="C:\\"
