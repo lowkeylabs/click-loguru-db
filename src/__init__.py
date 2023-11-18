@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 import argparse
 from functools import partial
+from urllib.request import build_opener
 import xdg
 from loguru import logger
 from tomlkit import table,loads,document,dumps
@@ -15,10 +16,17 @@ import click_config_file
 
 
 DEFAULT_LOG_LEVEL="WARNING"
+CURRENT_LOG_LEVEL=DEFAULT_LOG_LEVEL
+logger.remove()
+logger.add(sys.stderr, level=CURRENT_LOG_LEVEL)
+
 program_name = os.path.basename( sys.argv[0] ).lower()
-config_file_name = (program_name + '.toml').lower()
+## program_name = "builder" # pylint: disable=invalid-name
+
+
+config_file_name = (program_name + '.toml').lower() # pylint: disable=invalid-name
 ENV_CONFIG = program_name.upper()
-ENV_LOG_LEVEL = program_name+"_LOG_LEVEL"
+ENV_LOG_LEVEL = ENV_CONFIG+"_LOG_LEVEL"
 config = document()
 
 
@@ -31,21 +39,35 @@ def quick_arg_list():
     return args
 
 
+def set_log_level( new_log_level, msg = "" ):
+    ''' set log level only if log level is changed '''
+    global CURRENT_LOG_LEVEL # pylint: disable=invalid-name,global-variable-not-assigned,global-statement
+    if new_log_level is not None:
+        if new_log_level != CURRENT_LOG_LEVEL:
+            CURRENT_LOG_LEVEL = new_log_level
+            logger.remove()
+            logger.add(sys.stderr, level=CURRENT_LOG_LEVEL)
+            logger.debug(f"Setting log level to {CURRENT_LOG_LEVEL} {msg}")
+
+
 def init_logger_and_level( args ):
     ''' init logger and level using apprpriate '''
     log_level = DEFAULT_LOG_LEVEL # pylint: disable=invalid-name
+    msg = ""
     if args.log_level is not None:
         log_level = args.log_level
+        msg = "(command line arg)"
     if os.environ.get(ENV_LOG_LEVEL) is not None:
         log_level = os.environ.get(ENV_LOG_LEVEL)
-    logger.remove()
-    logger.add(sys.stderr, level=log_level)
+        msg = "(environment variable)"
+    set_log_level( log_level,msg )
 
 # See: https://dirs.dev/
 # https://github.com/dirs-dev/directories-rs
 
 def search_and_set_config(args):
     """ Search lots of places for config file """
+    global config_file_name # pylint: disable=invalid-name,global-variable-not-assigned, global-statement
     tempconfig = document()
     files = {}
 
@@ -101,13 +123,15 @@ def search_and_set_config(args):
             try:
                 with open(value,'r',encoding='utf-8') as file:
                     tempconfig = loads(file.read())
-                    logger.info(f"Using config file ({key}): {value}")
+                    logger.debug(f"current log level: {CURRENT_LOG_LEVEL}")
+                    logger.debug(f"Using config file ({key}): {value}")
+                    config_file_name = value
                     break
             except IOError:
                 pass
     # set empty config
     if tempconfig == document():
-        logger.info("Using empty config file")
+        logger.debug("Using empty config file")
 
     return tempconfig
 
@@ -117,11 +141,13 @@ init_logger_and_level( tempargs )
 # write messages now that logger is set up
 logger.trace(f"Inside {__file__}")
 logger.trace(f"sys.argv[1:]:{sys.argv[1:]}")
-logger.info(f"Using log level: {tempargs.log_level}")
+#logger.info(f"Using log level: {CURRENT_LOG_LEVEL}")
 
 # Now that logger is set, set up config with tracing
 
 config = search_and_set_config( tempargs )
+if "log_level" in config.keys():
+    set_log_level( config["log_level"],"(config file)" )
 
 # helpers using "partial" to change signatures
 
@@ -138,7 +164,9 @@ def myprovider( file_path, cmd_name ):  # pylint: disable=unused-argument
 
 click.option = partial(click.option, show_default=True)
 
-click_config_file.configuration_option = partial(click_config_file.configuration_option,implicit=False, provider=myprovider, hidden=True)
+click_config_file.configuration_option = partial(
+    click_config_file.configuration_option,implicit=False, provider=myprovider, hidden=True
+    )
 
 
 
